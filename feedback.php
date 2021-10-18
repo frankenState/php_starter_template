@@ -53,8 +53,7 @@ if (!isset($_GET['id']) || !isset($_GET['action']))
             
             <span class="badge badge-info"><?php echo "Posted on {$feedback->posted_at}"; ?></span>
             <span class="badge badge-info"><?php echo "Updated on {$feedback->post_updated_at}"; ?></span><br/>
-            <button class="btn btn-outline-primary btn-sm mt-2" data-toggle="modal" data-target="#editFeedback">Edit</button>
-            <?php include "includes/feedback.edit.php"; ?>
+            <a class="btn btn-outline-primary btn-sm mt-2" href="feedback.update.php?id=<?php echo $feedback->id; ?>">Edit</a>
             <a class="btn btn-outline-danger btn-sm mt-2" href="feedback.php?action=delete&id=<?php echo $feedback->id; ?>">Delete</a>
         </div>
     </div>
