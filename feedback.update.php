@@ -63,7 +63,7 @@
                     <textarea class="form-control" name="body" id="body" cols="30" rows="4" required><?php echo $feedback->body; ?></textarea>
                 </div>
                 <button name="feedback_update_btn" class="btn btn-primary" type="submit">Save</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <a type="button" class="btn btn-secondary" href="index.php">Cancel</a>
             </form>
         </div>
     </div>
