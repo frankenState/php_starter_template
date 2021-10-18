@@ -11,8 +11,8 @@ include "includes/navbar.php";
         <div class="col-md-10">
             <h1 class="display-4">Dashboard</h1>
 
-            <button class="btn btn-primary">Create</button>
-
+            <button class="btn btn-primary mb-2" data-toggle="modal" data-target="#createFeedback">Create</button>
+            <?php include "includes/feedback.create.php"; ?>
             <?php 
                 try {
                     $pdo = pdo_init();
