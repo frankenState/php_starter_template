@@ -46,8 +46,8 @@ include "includes/navbar.php";
                             <td><?php echo $v->status; ?></td>
                             <td><?php echo $v->created_at; ?></td>
                             <td>
-                                <a class="btn btn-success btn-sm" href="feedback.php?id=<?php echo $v->feedback_id; ?>">View</a>
-                                <a class="btn btn-danger btn-sm" href="delete.php?id=<?php echo $v->feedback_id; ?>">Delete</a>
+                                <a class="btn btn-success btn-sm" href="feedback.php?action=view&id=<?php echo $v->feedback_id; ?>">View</a>
+                                <a class="btn btn-danger btn-sm" href="feedback.php?action=delete&id=<?php echo $v->feedback_id; ?>">Delete</a>
                             </td>
                         </tr>
                         <?php } ?>
