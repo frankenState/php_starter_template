@@ -19,7 +19,7 @@
     }
 
     if (isset($_POST['feedback_update_btn'])){
-        $id = $_POST['id'];
+        $id = $_POST['feedback_id'];
         $title = $_POST['title'];
         $body = $_POST['body'];
 
@@ -31,7 +31,7 @@
             $stmt->bindParam(":body", $body);
             $stmt->bindparam(":id", $id);
             if($stmt->execute()){
-               // header('Location: feedback.php?id=' . $_GET['id']);   
+               header('Location: feedback.php?id=' . $_GET['id']);   
             } else {
         ?>
             <div class="alert alert-danger">
