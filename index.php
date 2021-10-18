@@ -9,7 +9,7 @@ include "includes/navbar.php";
 <div class="container">
     <div class="row">
         <div class="col-md-10">
-            <h1 class="display-4">Dashboard</h1>
+            <h1 class="display-4">Welcome <?php echo $_SESSION['user']->first_name . " " . $_SESSION['user']->last_name ?></h1>
 
             <button class="btn btn-primary mb-2" data-toggle="modal" data-target="#createFeedback">Create</button>
             <?php include "includes/feedback.create.php"; ?>
