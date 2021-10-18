@@ -107,9 +107,9 @@
             <p class="lead text-justify">
             In accordance with RA 10173 or Data Privacy Act of 2012, I consent to the following terms and conditions on the collection, use, processing and disclosure of my personal data:
 
-I am aware that Frank Lou A. Ubay under the Institute of Computing - Davao del Norte State College has collected and stored my personal data upon accomplishment of this form.
+I am aware that SOMEONE under the ORGANIZATION_NAME has collected and stored my personal data upon accomplishment of this form.
 
-I express my consent for Frank Lou A. Ubay to collect, store my personal information.
+I express my consent for SOMEONE to collect, store my personal information.
 
 I hereby affirm my right to be informed, object to processing, access, and rectify and to suspend or withdraw my personal data pursuant to the provisions of the RA 10173 and its implementing rules and regulations.
 
