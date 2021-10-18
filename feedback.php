@@ -3,6 +3,8 @@ $page_title = "Feedback Page";
 include "includes/header.php";
 include "sys/auth.check.php";
 
+
+
 if (!isset($_GET['id']) || !isset($_GET['action']))
     header('Location: index.php');
 
@@ -31,7 +33,7 @@ if (!isset($_GET['id']) || !isset($_GET['action']))
         </div>
         <?php
             }
-        } 
+        }
         
     } catch (PDOException $e) {
 ?>
@@ -50,7 +52,10 @@ if (!isset($_GET['id']) || !isset($_GET['action']))
             <p class="lead"><?php echo $feedback->body; ?></p>
             
             <span class="badge badge-info"><?php echo "Posted on {$feedback->posted_at}"; ?></span>
-            <span class="badge badge-info"><?php echo "Updated on {$feedback->post_updated_at}"; ?></span>
+            <span class="badge badge-info"><?php echo "Updated on {$feedback->post_updated_at}"; ?></span><br/>
+            <button class="btn btn-outline-primary btn-sm mt-2" data-toggle="modal" data-target="#editFeedback">Edit</button>
+            <?php include "includes/feedback.edit.php"; ?>
+            <a class="btn btn-outline-danger btn-sm mt-2" href="feedback.php?action=delete&id=<?php echo $feedback->id; ?>">Delete</a>
         </div>
     </div>
 </div>
