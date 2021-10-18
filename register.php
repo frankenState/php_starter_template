@@ -1,23 +1,109 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registration Page</title>
-  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-  <link rel="stylesheet" href="assets/font-awesome/css/all.css">
-  <link rel="stylesheet" href="assets/css/registration.css">
-</head>
-<body>
+<?php 
+$page_title = "Registration Page";
+include "includes/header.php";
 
+if (isset($_POST['form_finish'])){
+  $email = $_POST['email'];
+  $username = $_POST['username'];
+  $password = $_POST['password'];
+  $confirm_password = $_POST['confirm_password'];
+  $first_name = $_POST['first_name'];
+  $last_name = $_POST['last_name'];
+  $contact_no = $_POST['contact_no'];
+  $alt_contact_no = $_POST['alt_contact_no'];
+  $avatar = $_FILES['avatar']["name"];
+
+  // upload the image
+  $uploadStatus = TRUE;
+  $errors = [];
+  // max file size <= 40MB
+  if ($_FILES["avatar"]["size"] > 600000){
+    $errors[] = "File is too large.";
+    $uploadStatus = FALSE;
+  }
+
+  if (!getimagesize($_FILES['avatar']['tmp_name'])){
+    $errors[] = "The file must be an image.";
+    $uploadStatus = FALSE;
+  }
+ 
+  
+  $file_location = strtolower($_FILES["avatar"]["name"]);
+  $extension = strtolower(pathinfo($file_location, PATHINFO_EXTENSION));
+  if ($extension != 'jpg' && $extension != 'jpeg' && $extension != 'png'){
+    
+    $errors[] = "The valid file extensions are jpg, jpeg, and png.";
+    $uploadStatus = FALSE;
+  }
+
+  $avatar = $email . "." . $extension;
+  $new_file_location = "assets/imgs/$avatar";
+  if (file_exists($new_file_location)){
+    if (!unlink($new_file_location)){
+      $errors[] = "Unable to delete the existing file.";
+    }
+  }
+
+  if ($password != $confirm_password){
+    $errors[] = "Password does not match with confirm password.";
+  }
+
+  if ($uploadStatus){
+    if (!move_uploaded_file($_FILES["avatar"]["tmp_name"], $new_file_location)){
+      $errors[] = "File is not uploaded successfully.";
+    } else {
+      // successfull
+      try {
+        $pdo = pdo_init();
+        $stmt = $pdo->prepare("INSERT INTO users(email,username,password,first_name,last_name,contact_number,alternative_contact_number,avatar) VALUES (:email,:username,:password,:first_name,:last_name,:contact_number,:alternative_contact_number,:avatar)");
+        $stmt->bindParam(":email", $email);
+        $stmt->bindParam(":username", $username);
+        $stmt->bindParam(":password", $password);
+        $stmt->bindParam(":first_name", $first_name);
+        $stmt->bindParam(":last_name", $last_name);
+        $stmt->bindParam(":contact_number", $contact_no);
+        $stmt->bindParam(":alternative_contact_number", $alt_contact_no);
+        $stmt->bindParam(":avatar", $avatar);
+        $stmt->execute();
+
+        header('Location: login.php');
+      } catch (PDOException $e){
+        ?>
+            <div class="alert alert-danger">
+              <?php echo $e->getMessage(); ?>
+            </div>
+        <?php
+      }
+    }
+  }
+  
+  }
+
+
+  
+
+
+?>
 <div class="container-fluid">
   <div class="row justify-content-center">
     <div class="col-11 col-sm-9 col-md-7 col-lg-6 col-xl-5 text-center p-0 mt-3 mb-2">
       <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
         <h2 id="header">Sign Up Your User Accounts</h2>
         <p>Fill all form field to go to next step</p>
-        <form id="msform">
+        <?php if (isset($errors)) { ?>
+          <ul>
+        <?php
+          foreach ($errors as $v) {
+        ?>
+                <li><?php echo $v; ?></li>
+        <?php
+          }
+        ?>
+          </ul>
+        <?php
+        } 
+        ?>
+        <form id="msform" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" enctype="multipart/form-data">
           <ul id="progressbar">
             <li class="active" id="account"><strong>Account</strong></li>
             <li id="personal">Personal</li>
@@ -86,7 +172,7 @@
               </div>
               <!-- START: third form  -->
               <label for="avatar" class="fieldlabels">Upload Your Avatar</label>
-              <input type="file" name="avatar" id="avatar" accept="image/*">
+              <input type="file" name="avatar" id="avatar">
             </div>
             <button type="button" class="next action-button">Next</button>
             <button type="button" class="previous action-button-previous" name="previous">Previous</button>
@@ -117,7 +203,7 @@ By clicking the <strong>FINISH</strong> button below, I warrant that I have read
             </p>
             </div>
             
-            <button type="submit" class="next action-button">Finish</button>
+            <button name="form_finish" type="submit" class="next action-button">Finish</button>
             <button type="button" class="previous action-button-previous" name="previous">Previous</button>
           </fieldset>
         </form>
@@ -126,9 +212,4 @@ By clicking the <strong>FINISH</strong> button below, I warrant that I have read
   </div>
 </div>
 
-  <script src="assets/js/jquery-3.6.0.min.js"></script>
-  <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-  <script src="assets/font-awesome/js/all.js"></script>
-  <script src="assets/js/registration.js"></script>
-</body>
-</html>
+<?php include "includes/footer.php"; ?>
