@@ -46,10 +46,13 @@ include "includes/navbar.php";
                             <td><?php echo $v->status; ?></td>
                             <td><?php echo $v->created_at; ?></td>
                             <td>
-                                <a class="btn btn-success btn-sm" href="feedback.php?action=view&id=<?php echo $v->feedback_id; ?>">View</a>
-                                <?php if ($_SESSION['user']->type == "ADMIN" || $v->user_id == $_SESSION['user']->id) { ?>
-                                <a class="btn btn-danger btn-sm" href="feedback.php?action=delete&id=<?php echo $v->feedback_id; ?>">Delete</a>
-                                <?php } ?>
+                               <div class="btn-group">
+                                <a class="btn btn-outline-dark btn-sm" href="feedback.php?action=view&id=<?php echo $v->feedback_id; ?>">View</a>
+                                    <?php if ($_SESSION['user']->type == "ADMIN" || $v->user_id == $_SESSION['user']->id) { ?>
+                                    <a class="btn btn-outline-dark btn-sm" href="feedback.update.php?id=<?php echo $v->feedback_id; ?>">Edit</a>
+                                    <a class="btn btn-outline-danger btn-sm" href="feedback.php?action=delete&id=<?php echo $v->feedback_id; ?>">Delete</a>
+                                    <?php } ?>
+                               </div>
                             </td>
                         </tr>
                         <?php } ?>
